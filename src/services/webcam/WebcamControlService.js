@@ -2,7 +2,7 @@ const NodeWebcam = require('node-webcam');
 
 // Webcam 操作のためのクラス
 export default class WebcamControlService {
-  // RaspberryPi に接続された Webcam で写真を撮影する
+  // PCに接続したWebカメラで写真を撮影する
   static captureImage() {
     // Default Options
     let opts = {
