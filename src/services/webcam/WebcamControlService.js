@@ -1,7 +1,7 @@
 const NodeWebcam = require('node-webcam');
 
 // Webcam 操作のためのクラス
-export default class WebcamControlService {
+class WebcamControlService {
   // PCに接続したWebカメラで写真を撮影する
   static captureImage() {
     // Default Options
@@ -39,3 +39,5 @@ export default class WebcamControlService {
     return;
   }
 }
+
+module.exports = WebcamControlService;
