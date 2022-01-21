@@ -3,7 +3,7 @@ const NodeWebcam = require('node-webcam');
 // Webcam 操作のためのクラス
 class WebcamControlService {
   // PCに接続したWebカメラで写真を撮影する
-  static captureImage() {
+  static async captureImage() {
     // Default Options
     let opts = {
       width: 1280,
@@ -35,7 +35,6 @@ class WebcamControlService {
     NodeWebcam.capture('img', opts, function (err, data) {
       let image = "<img src='" + data + "'>";
     });
-
     return;
   }
 }
