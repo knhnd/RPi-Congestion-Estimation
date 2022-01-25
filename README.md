@@ -1,8 +1,8 @@
-# ラズパイ × Web カメラでつくる簡易的な「混雑率推定システム」
+# Web カメラを用いた簡易的な「混雑率推定システム」
 
 ## 概要
 
-RaspberryPi と Web カメラを用いた簡易的な「**混雑率推定のためのシステム**」です．開発プロセスは [Zenn](https://zenn.dev/) で[ドキュメント化]()してあります．詳しい情報はそちらを参照してください．
+RaspberryPi と Web カメラを用いた簡易的な「**混雑率推定のためのシステム**」です．開発プロセスは [Zenn](https://zenn.dev/) で[ドキュメント化]()してあります．詳しい情報はそちらを参照してください．RaspberryPi でエッジコンピューティングの入門を行う目的で開発したものです (ローカルでも動きます)．
 
 ### できること
 
@@ -41,22 +41,22 @@ congestion-estimation
      L img.jpg (Webカメラで撮影した画像)
      L src
          L index.js (これはルーティング用なので今回使わない)
-	     L edge.js (ラズパイではこのファイルを実行するだけ)
-	     L config.js (認証情報など(gitにはpushされない))
-	 L services
-	     L webcam
-	         L WebcamContorolService.js (Webcam操作系)
-	     L ComputerVision
-	         L ObjectDetectionService.js (Cloud Vision API を利用する)
-       L CRUD
-           L FirestoreService.js (DB操作)
+	       L edge.js (ラズパイではこのファイルを実行するだけ)
+	       L config.js (認証情報など(gitにはpushされない))
+	       L services
+	           L webcam
+	               L WebcamControlService.js (Webcam操作系)
+	           L ComputerVision
+	               L ObjectDetectionService.js (Cloud Vision API を利用する)
+             L CRUD
+                 L FirestoreService.js (DB操作)
 ```
 
 基本的に `services` 以下に必要な機能を実装し，それを `edge.js` から呼び出していきます．
 
 ### 実行方法
 
-Cloud Vision API や Firebase/Firestore は設定済みで，環境変数やサービスアカウントが正常に設定されていればローカルでも RaspberryPi でも実行できます．
+Cloud Vision API や Firebase/Firestore は設定済みで，環境変数やサービスアカウントが正常に設定されていればローカルでも RaspberryPi でも実行できます．設定方法などは Zenn のドキュメントを参照してください．
 
 - `src/` 以下にある `edge.js` を実行すればすべての処理が実行される
   - プロジェクトルートで `node ./src/edge.js`
