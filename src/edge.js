@@ -1,6 +1,7 @@
 const WebcamControlService = require('./services/webcam/WebcamControlService.js');
 const ObjectDetectionService = require('./services/ComputerVision/ObjectDetectionService.js');
 const FirestoreService = require('./services/CRUD/FirestoreService');
+const cron = require('node-cron');
 
 // Webカメラを用いた混雑度推定
 const congestionEstimation = async () => {
@@ -45,4 +46,7 @@ const congestionEstimation = async () => {
     });
 };
 
-congestionEstimation();
+// 1分おきに定期実行させる
+cron.schedule('1 * * * * *', () => {
+  congestionEstimation();
+});
