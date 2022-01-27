@@ -66,6 +66,11 @@ Cloud Vision API や Firebase/Firestore は設定済みで，環境変数やサ�
 
 **※ プログラムを終了し忘れると，Cloud Vision API などは料金がかかるので注意してください．**
 
+## 今後のアップデート予定
+
+- 撮影した写真はオブジェクト検知終了時に削除する
+- Firestore に格納する際のタイムスタンプの調整
+
 ## Reference
 
 1. [一般社団法人 日本民営鉄道協会, 混雑率](https://www.mintetsu.or.jp/knowledge/term/16370.html#:~:text=%22%E8%BC%B8%E9%80%81%E4%BA%BA%E5%93%A1%C3%B7%E8%BC%B8%E9%80%81%E5%8A%9B,%E6%AF%8E%E5%B9%B4%E5%85%AC%E8%A1%A8%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82).
