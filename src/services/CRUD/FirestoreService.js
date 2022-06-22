@@ -11,8 +11,7 @@ class FirestoreService {
     const db = admin.firestore();
 
     // 現在時刻を取得
-    const date = new Date();
-    const formattedDate = date.toFormat('YYYYMMDDHH24MISS');
+    const timestamp = firebase.firestore.Timestamp.now();
 
     // Firestore へ書き込み
     await db
@@ -20,7 +19,7 @@ class FirestoreService {
       .doc('boTrseygojrZeVzm3oUz')
       .collection('observation-data')
       .add({
-        timestamp: formattedDate,
+        createdAt: timestamp,
         peopleCount: peopleCount,
         congestionDegree: congestionDegree,
       })
@@ -30,6 +29,31 @@ class FirestoreService {
       .catch((err) => {
         console.log('Error: ', err);
       });
+  }
+
+  // 全体混雑率を計算して返す
+  static async getAllLatestData() {
+    const db = admin.firestore();
+    const edgeCollectionRef = await db.collection('edge');
+    const edgeCollectionSnapshot = await edgeCollectionRef.get();
+    const congestionDegrees = [];
+
+    // 公式のforEachだとpromiseできないのでmapを使う
+    await Promise.all(
+      // mapする場合はsnapshotのdocsを取る
+      edgeCollectionSnapshot.docs.map(async (doc) => {
+        const subcollectionSnapshot = await doc.ref
+          .collection('observation-data')
+          .orderBy('timestamp', 'desc')
+          .limit(1)
+          .get();
+        subcollectionSnapshot.docs.map(async (subcollectionDoc) => {
+          const latestDocument = subcollectionDoc.data();
+          congestionDegrees.push(latestDocument.congestionDegree);
+        });
+      })
+    );
+    return congestionDegrees;
   }
 }
 module.exports = FirestoreService;
