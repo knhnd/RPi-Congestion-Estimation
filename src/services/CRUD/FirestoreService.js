@@ -11,7 +11,7 @@ class FirestoreService {
     const db = admin.firestore();
 
     // 現在時刻を取得
-    const timestamp = firebase.firestore.Timestamp.now();
+    const timestamp = new Date();
 
     // Firestore へ書き込み
     await db
@@ -40,7 +40,7 @@ class FirestoreService {
 
     // 公式のforEachだとpromiseできないのでmapを使う
     await Promise.all(
-      // mapする場合はsnapshotのdocsを取る
+      // mapする場合はsnapshotのdocsだけを取る
       edgeCollectionSnapshot.docs.map(async (doc) => {
         const subcollectionSnapshot = await doc.ref
           .collection('observation-data')
@@ -53,7 +53,31 @@ class FirestoreService {
         });
       })
     );
-    return congestionDegrees;
+    const sumCongestions = congestionDegrees.reduce((sum, element) => {
+      return sum + element;
+    });
+    const totalCOngestionDegree = sumCongestions / congestionDegrees.length;
+    return totalCOngestionDegree;
+  }
+
+  // 特定のコレクションにデータを追加する
+  static async addDataToFirestore(data) {
+    const timestamp = new Date();
+
+    // Firestore へ書き込み
+    const db = admin.firestore();
+    await db
+      .collection('edge_aggregated')
+      .add({
+        createdAt: timestamp,
+        congestionDegree: data,
+      })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log('Error: ', err);
+      });
   }
 }
 module.exports = FirestoreService;

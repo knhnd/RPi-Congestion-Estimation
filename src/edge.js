@@ -46,7 +46,7 @@ const congestionEstimation = async () => {
     });
 };
 
-// 1分おきに定期実行させる
+// 1分おきに定期実行
 cron.schedule('1 * * * * *', () => {
   congestionEstimation();
 });
